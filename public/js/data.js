@@ -232,31 +232,6 @@ const CT_RESTAURANTS = [
   },
 ];
 
-/* ---------- Featured: Indian-food hubs ---------- */
-const INDIAN_HUBS = [
-  {
-    name: "Holiday Inn Express Fall River North",
-    sub: "360 Airport Rd, Fall River, MA 02720",
-    icon: "🏨",
-    near: "360 Airport Rd, Fall River, MA 02720",
-    tint: "from-orange-500 to-red-500",
-  },
-  {
-    name: "Roger Williams Park Zoo",
-    sub: "1000 Elmwood Ave, Providence, RI 02907",
-    icon: "🦁",
-    near: "Roger Williams Park Zoo, Providence, RI",
-    tint: "from-amber-500 to-orange-600",
-  },
-  {
-    name: "Providence Downtown",
-    sub: "Downtown, Providence, RI 02903",
-    icon: "🏙️",
-    near: "Downtown Providence, RI",
-    tint: "from-yellow-500 to-red-500",
-  },
-];
-
 /* ---------- Route weather waypoints ---------- */
 const WEATHER_POINTS = [
   { name: "Madison, CT",       sub: "Breakfast stop",      icon: "🥯", lat: 41.2795, lon: -72.6004, tint: "from-amber-400 to-yellow-500" },

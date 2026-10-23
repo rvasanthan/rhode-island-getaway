@@ -463,7 +463,6 @@ const Expenses = (() => {
 /* ---------- Wire up ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
-  renderHubs();
   renderLunchStops();
   renderWeather();
   Expenses.init();
