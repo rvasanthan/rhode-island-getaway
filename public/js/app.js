@@ -413,7 +413,12 @@ const Expenses = (() => {
     }).join("") || '<p class="text-sm text-slate-500 text-center py-4">No expenses yet — add the first one above!</p>';
 
     list.querySelectorAll("[data-del]").forEach((b) =>
-      b.addEventListener("click", () => remove(b.getAttribute("data-del")))
+      b.addEventListener("click", () => {
+        const entry = expenses.find((e) => e.id === b.getAttribute("data-del"));
+        if (entry && confirm(`Delete "${entry.title}" (${fmt(entry.amount)})?`)) {
+          remove(entry.id);
+        }
+      })
     );
   }
 
