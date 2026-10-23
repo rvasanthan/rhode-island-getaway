@@ -44,7 +44,7 @@ function renderTimeline() {
               </div>
               <h3 class="text-xl md:text-2xl font-display font-bold text-white">${s.name}</h3>
               <p class="text-sm text-slate-300/80 mt-1">${s.tagline}</p>
-              <p class="mt-3 text-xs font-semibold text-slate-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Tap for food, coffee & essentials →</p>
+              <p class="mt-3 text-xs font-semibold text-slate-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Tap for details & directions →</p>
             </div>
           </div>
         </div>
@@ -140,23 +140,6 @@ function openStop(id) {
   $("#modal-place-link").href = maps(s.addr);
   $("#modal-banner").className = `h-28 md:h-36 rounded-t-3xl bg-gradient-to-br ${s.tint} flex items-center justify-center text-6xl md:text-7xl`;
   $("#modal-banner-icon").textContent = s.icon;
-
-  const grid = $("#modal-links");
-  grid.innerHTML = "";
-  linksFor(s.near).forEach((l) => {
-    const a = document.createElement("a");
-    a.href = l.url;
-    a.target = "_blank";
-    a.rel = "noopener";
-    a.className =
-      "flex items-center gap-3 rounded-2xl border border-slate-700/70 bg-slate-800/60 px-4 py-3.5 hover:border-transparent hover:bg-slate-800 transition group/link";
-    a.innerHTML = `
-      <span class="w-9 h-9 shrink-0 rounded-xl bg-gradient-to-br ${l.accent} flex items-center justify-center text-lg">${l.icon}</span>
-      <span class="text-sm font-semibold text-slate-100">${l.label}</span>
-      <span class="ml-auto text-slate-500 group-hover/link:text-white transition">↗</span>
-    `;
-    grid.appendChild(a);
-  });
 
   $("#modal").classList.remove("hidden");
   document.body.classList.add("overflow-hidden");

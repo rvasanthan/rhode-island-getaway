@@ -54,7 +54,6 @@
         <a href="#itinerary" class="hover:text-white transition">Itinerary</a>
         <a href="#indian" class="hover:text-white transition">Indian Food Finder</a>
         <a href="#drive-home" class="hover:text-white transition">Drive Home</a>
-        <a href="#legend" class="hover:text-white transition">What’s Nearby</a>
       </div>
       <a href="#itinerary" class="md:hidden text-xs font-bold px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-slate-950">Plan</a>
     </div>
@@ -97,7 +96,7 @@
       <div class="text-center mb-14">
         <p class="text-xs font-bold uppercase tracking-[0.4em] text-fuchsia-300 mb-3">Trip Timeline</p>
         <h2 class="font-display text-4xl md:text-5xl font-black">Your Journey, Stop by Stop</h2>
-        <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Tap any stop to find nearby Indian restaurants and coffee shops.</p>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Tap any stop for details and a one-tap Google Maps link.</p>
       </div>
       <div id="timeline" class="space-y-16"></div>
     </section>
@@ -127,14 +126,6 @@
       </div>
     </section>
 
-    <!-- ══════════ LEGEND ══════════ -->
-    <section id="legend" class="max-w-6xl mx-auto px-5 py-16 md:py-24">
-      <div class="text-center mb-12">
-        <p class="text-xs font-bold uppercase tracking-[0.4em] text-emerald-300 mb-3">Every Stop Includes</p>
-        <h2 class="font-display text-4xl md:text-5xl font-black">What’s Nearby</h2>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="legend-grid"></div>
-    </section>
   </main>
 
   <!-- ══════════ FOOTER ══════════ -->
@@ -166,29 +157,12 @@
           <span class="text-xl">↗</span>
         </a>
 
-        <div class="mt-6 pt-5 border-t border-slate-800">
-          <p class="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-4">Nearby — Indian Food & Coffee</p>
-          <div id="modal-links" class="grid sm:grid-cols-2 gap-3"></div>
-        </div>
+        <div class="mt-6 pt-5 border-t border-slate-800"></div>
       </div>
     </div>
   </div>
 
-  <script src="js/data.js?v=8"></script>
-  <script src="js/app.js?v=8"></script>
-  <script>
-    /* Legend (static, built from CATEGORIES) */
-    (function () {
-      const grid = document.getElementById("legend-grid");
-      CATEGORIES.forEach((c) => {
-        const d = document.createElement("div");
-        d.className = "rounded-2xl border border-slate-700/60 bg-slate-900/60 p-5 text-center hover:-translate-y-1 transition-transform";
-        d.innerHTML = `
-          <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br ${c.accent} flex items-center justify-center text-2xl shadow-lg">${c.icon}</div>
-          <p class="mt-3 text-xs font-bold text-slate-200">${c.label}</p>`;
-        grid.appendChild(d);
-      });
-    })();
-  </script>
+  <script src="js/data.js?v=9"></script>
+  <script src="js/app.js?v=9"></script>
 </body>
 </html>
