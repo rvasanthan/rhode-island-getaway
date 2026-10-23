@@ -20,6 +20,18 @@ const TRIP_DAYS = [
 
 const STOPS = [
   {
+    id: "breakfast-ct",
+    day: 1,
+    time: "7:30 AM",
+    name: "Breakfast — Cohen's Bagels & Salt Meadow Park",
+    icon: "🥯",
+    tagline: "Picnic breakfast in Madison, CT",
+    desc: "Grab freshly baked bagels, breakfast sandwiches and coffee at Cohen's Bagel Company (opens 7 AM), then cross Boston Post Road to Salt Meadow Park for a picnic-table breakfast with the family — then it's onward to Newport.",
+    addr: "1347 Boston Post Rd, Madison, CT 06443",
+    near: "Cohen's Bagel Company, Madison, CT",
+    tint: "from-amber-400 to-yellow-500",
+  },
+  {
     id: "breakers",
     day: 1,
     time: "9:30 AM",
