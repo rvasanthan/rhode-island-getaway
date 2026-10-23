@@ -30,7 +30,7 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 - **Interactive timeline** — tap any stop to open a detail card
 - **Interactive timeline** — tap any stop for details and a big one-tap Google Maps button
 - **Live route weather** — current conditions + Sat/Sun forecast for every waypoint, plus a weather badge on every timeline tile and a forecast block in each stop's detail card (Open-Meteo, no API key)
-- **Shared expense tracker** — anyone with the link can add expenses; live summary by category and person (Firestore-backed, localStorage fallback)
+- **Shared expense tracker** — per-person entries assigned to one of two families; live summary shows per-family totals and calculates who owes whom (50/50 split). Firestore-backed with localStorage fallback
 - **Indian-food hub finder** for the three key anchors: Holiday Inn Fall River, Roger Williams Zoo, and Providence Downtown
 - All links are live Google Maps searches — always current ratings, hours and directions
 - Tailwind CSS, single-page static app, mobile-friendly

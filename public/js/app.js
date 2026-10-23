@@ -328,12 +328,13 @@ const Expenses = (() => {
         : "⏳ Connecting to shared store…";
   }
 
-  async function add({ title, amount, category, paidBy, stop }) {
+  async function add({ title, amount, category, paidBy, family, stop }) {
     const entry = {
       title: title.trim(),
       amount: Math.round(Number(amount) * 100) / 100,
       category,
       paidBy: paidBy.trim() || "Someone",
+      family: family === "B" ? "B" : "A",
       stop: stop || "",
       createdAt: Date.now(),
     };
@@ -359,6 +360,27 @@ const Expenses = (() => {
       saveLocal();
       render();
     }
+  }
+
+  function familyNames() {
+    return {
+      A: ($("#fam-a-name")?.value || "").trim() || "Family A",
+      B: ($("#fam-b-name")?.value || "").trim() || "Family B",
+    };
+  }
+
+  function settlement(totA, totB) {
+    const names = familyNames();
+    const total = totA + totB;
+    if (total <= 0) return { text: "Add expenses to see who owes what.", neutral: true };
+    const share = total / 2;               // each family should pay half
+    const owed = Math.abs(totA - totB) / 2;
+    if (Math.abs(totA - totB) < 0.005) {
+      return { text: `✅ All square — each family spent ${fmt(share)}.`, neutral: true };
+    }
+    const payer = totA > totB ? names.B : names.A;   // family that paid less owes
+    const payee = totA > totB ? names.A : names.B;
+    return { text: `💸 ${payer} owes ${payee} ${fmt(owed)}`, neutral: false };
   }
 
   function render() {
@@ -396,6 +418,19 @@ const Expenses = (() => {
         <span class="text-xs font-black text-emerald-300">${fmt(v)}</span>
       </div>`).join("") || '<p class="text-xs text-slate-500">—</p>';
 
+    /* family summary + settlement */
+    const totA = expenses.filter((e) => e.family !== "B").reduce((s, e) => s + e.amount, 0);
+    const totB = expenses.filter((e) => e.family === "B").reduce((s, e) => s + e.amount, 0);
+    const names = familyNames();
+    $("#fam-a-total").textContent = fmt(totA);
+    $("#fam-b-total").textContent = fmt(totB);
+    $("#fam-a-label").textContent = names.A;
+    $("#fam-b-label").textContent = names.B;
+    const s = settlement(totA, totB);
+    const box = $("#exp-settle");
+    box.textContent = s.text;
+    box.className = `rounded-2xl px-5 py-4 text-center font-display font-bold text-lg md:text-xl border ${s.neutral ? "border-slate-700/60 bg-slate-900/70 text-slate-200" : "border-amber-400/50 bg-amber-500/10 text-amber-200"}`;
+
     /* entries */
     list.innerHTML = expenses.map((e) => {
       const m = catMeta(e.category);
@@ -405,7 +440,7 @@ const Expenses = (() => {
           <span class="text-xl">${m.icon}</span>
           <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-white truncate">${e.title}</p>
-            <p class="text-[11px] text-slate-400">${e.paidBy}${e.stop ? ` · ${e.stop}` : ""} · ${dt}</p>
+            <p class="text-[11px] text-slate-400">${e.paidBy} · ${familyNames()[e.family === "B" ? "B" : "A"]}${e.stop ? ` · ${e.stop}` : ""} · ${dt}</p>
           </div>
           <span class="text-sm font-black text-emerald-300">${fmt(e.amount)}</span>
           <button data-del="${e.id}" class="text-slate-500 hover:text-red-400 transition text-sm px-1" title="Delete">🗑️</button>
@@ -422,7 +457,7 @@ const Expenses = (() => {
     );
   }
 
-  return { init, add };
+  return { init, add, rerender: render };
 })();
 
 /* ---------- Wire up ---------- */
@@ -452,6 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
       amount: $("#exp-amount").value,
       category: $("#exp-category").value,
       paidBy: $("#exp-paidby").value,
+      family: $("#exp-family").value,
       stop: $("#exp-stop").value,
     });
     btn.disabled = false;
@@ -463,6 +499,11 @@ document.addEventListener("DOMContentLoaded", () => {
       e.target.reset();
     }
   });
+
+  /* re-render summary when family names change */
+  ["#fam-a-name", "#fam-b-name"].forEach((sel) =>
+    $(sel).addEventListener("input", () => Expenses.rerender())
+  );
 
   $("#modal-close").addEventListener("click", closeModal);
   $("#modal-backdrop").addEventListener("click", closeModal);

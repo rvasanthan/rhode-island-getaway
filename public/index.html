@@ -174,9 +174,15 @@
               </div>
               <input id="exp-paidby" placeholder="Paid by (your name)"
                      class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400" />
-              <select id="exp-stop" class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
-                <option value="">📍 Link to a stop (optional)</option>
-              </select>
+              <div class="grid grid-cols-2 gap-3">
+                <select id="exp-family" class="rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
+                  <option value="A">👨‍👩‍👧 Family A</option>
+                  <option value="B">👨‍👩‍👦 Family B</option>
+                </select>
+                <select id="exp-stop" class="rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
+                  <option value="">📍 Stop (optional)</option>
+                </select>
+              </div>
               <p id="exp-error" class="text-xs text-red-400"></p>
               <button id="exp-add-btn" type="submit"
                       class="w-full rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 font-bold py-3.5 hover:opacity-90 transition">
@@ -195,6 +201,29 @@
               <div class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 text-center">
                 <p class="text-3xl font-black bg-gradient-to-r from-cyan-300 to-sky-400 bg-clip-text text-transparent" id="exp-count">0</p>
                 <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Entries</p>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400 mb-4">Per-Family Split</p>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div class="rounded-2xl border border-fuchsia-500/40 bg-fuchsia-500/10 p-4">
+                  <input id="fam-a-name" placeholder="Family A" value="Family A"
+                         class="w-full bg-transparent border-b border-fuchsia-400/40 text-sm font-bold text-fuchsia-200 pb-1 focus:outline-none focus:border-fuchsia-300" />
+                  <p class="text-2xl font-black text-white mt-2" id="fam-a-total">$0.00</p>
+                  <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Spent by <span id="fam-a-label">Family A</span></p>
+                </div>
+                <div class="rounded-2xl border border-cyan-500/40 bg-cyan-500/10 p-4">
+                  <input id="fam-b-name" placeholder="Family B" value="Family B"
+                         class="w-full bg-transparent border-b border-cyan-400/40 text-sm font-bold text-cyan-200 pb-1 focus:outline-none focus:border-cyan-300" />
+                  <p class="text-2xl font-black text-white mt-2" id="fam-b-total">$0.00</p>
+                  <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Spent by <span id="fam-b-label">Family B</span></p>
+                </div>
+              </div>
+              <div class="mt-4" id="exp-settle-wrap">
+                <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400 mb-2">Settlement</p>
+                <div id="exp-settle" class="rounded-2xl px-5 py-4 text-center font-display font-bold text-lg md:text-xl border border-slate-700/60 bg-slate-900/70 text-slate-200">Add expenses to see who owes what.</div>
+                <p class="text-[10px] text-slate-500 mt-2 text-center">Split 50/50 between the two families.</p>
               </div>
             </div>
 
@@ -254,7 +283,7 @@
     </div>
   </div>
 
-  <script src="js/data.js?v=14"></script>
-  <script src="js/app.js?v=14"></script>
+  <script src="js/data.js?v=15"></script>
+  <script src="js/app.js?v=15"></script>
 </body>
 </html>
