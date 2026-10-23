@@ -140,6 +140,7 @@ function openStop(id) {
   $("#modal-place-link").href = maps(s.addr);
   $("#modal-banner").className = `h-28 md:h-36 rounded-t-3xl bg-gradient-to-br ${s.tint} flex items-center justify-center text-6xl md:text-7xl`;
   $("#modal-banner-icon").textContent = s.icon;
+  $("#modal-weather").innerHTML = stopWeatherHTML(s);
 
   $("#modal").classList.remove("hidden");
   document.body.classList.add("overflow-hidden");
@@ -150,13 +151,15 @@ function closeModal() {
   document.body.classList.remove("overflow-hidden");
 }
 
-/* ---------- Weather across the route (Open-Meteo, no key) ---------- */
+/* ---------- Weather across the route + per-stop (Open-Meteo, no key) ---------- */
 async function renderWeather() {
   const grid = $("#weather-grid");
   const stamp = $("#weather-updated");
 
-  const lats = WEATHER_POINTS.map((p) => p.lat).join(",");
-  const lons = WEATHER_POINTS.map((p) => p.lon).join(",");
+  /* One batch call covers route waypoints AND every timeline stop */
+  const all = [...WEATHER_POINTS, ...STOPS];
+  const lats = all.map((p) => p.lat).join(",");
+  const lons = all.map((p) => p.lon).join(",");
   const url =
     `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}` +
     `&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m` +
@@ -168,8 +171,14 @@ async function renderWeather() {
     const data = await res.json();
     const arr = Array.isArray(data) ? data : [data];
 
+    /* per-stop cache */
+    STOPS.forEach((s, i) => {
+      stopWeather[s.id] = arr[WEATHER_POINTS.length + i];
+    });
+
+    /* route-waypoint cards */
     grid.innerHTML = "";
-    arr.forEach((d, i) => {
+    arr.slice(0, WEATHER_POINTS.length).forEach((d, i) => {
       const p = WEATHER_POINTS[i];
       if (!d || !d.current) return;
       const cur = d.current;
@@ -212,10 +221,61 @@ async function renderWeather() {
     });
 
     stamp.textContent = `Updated ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })} · Open-Meteo forecast`;
+    addStopWeatherBadges();
   } catch (e) {
     stamp.textContent = "Weather unavailable right now — check back shortly.";
   }
 }
+
+/* Small ☀️ 55° badge on each timeline tile */
+function addStopWeatherBadges() {
+  document.querySelectorAll("[data-stop]").forEach((card) => {
+    const s = STOPS.find((x) => x.id === card.getAttribute("data-stop"));
+    const d = stopWeather[s?.id];
+    if (!d?.current) return;
+    const badge = document.createElement("span");
+    badge.className =
+      "text-xs font-semibold px-3 py-1 rounded-full bg-slate-800/80 border border-slate-600/70 text-slate-100";
+    badge.textContent = `${wmo(d.current.weather_code).icon} ${Math.round(d.current.temperature_2m)}°F`;
+    card.querySelector(".flex.flex-wrap.items-center").appendChild(badge);
+  });
+}
+
+/* Weather block injected into a stop's detail card */
+function stopWeatherHTML(s) {
+  const d = stopWeather[s.id];
+  if (!d?.current) return "";
+  const cur = d.current;
+  const w = wmo(cur.weather_code);
+  const day = (i) => ({
+    w: wmo(d.daily.weather_code[i]),
+    lo: Math.round(d.daily.temperature_2m_min[i]),
+    hi: Math.round(d.daily.temperature_2m_max[i]),
+    rain: d.daily.precipitation_probability_max?.[i],
+  });
+  const sat = day(1);
+  const sun = day(2);
+  return `
+    <div class="mt-5 rounded-2xl border border-sky-500/30 bg-sky-500/10 p-4">
+      <div class="flex items-center justify-between">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-sky-300">Weather here</p>
+        <p class="text-sm text-slate-200">${w.icon} <span class="font-black">${Math.round(cur.temperature_2m)}°F</span>
+          <span class="text-xs text-slate-400">feels ${Math.round(cur.apparent_temperature)}° · ${w.label} · 💨 ${Math.round(cur.wind_speed_10m)} mph</span></p>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-3 text-center">
+        <div class="rounded-xl bg-slate-900/60 py-2">
+          <p class="text-[10px] uppercase tracking-wider text-slate-400">Sat</p>
+          <p class="text-sm font-bold text-slate-100">${sat.w.icon} ${sat.lo}°/${sat.hi}° <span class="text-sky-300 text-[10px]">☔ ${sat.rain ?? 0}%</span></p>
+        </div>
+        <div class="rounded-xl bg-slate-900/60 py-2">
+          <p class="text-[10px] uppercase tracking-wider text-slate-400">Sun</p>
+          <p class="text-sm font-bold text-slate-100">${sun.w.icon} ${sun.lo}°/${sun.hi}° <span class="text-sky-300 text-[10px]">☔ ${sun.rain ?? 0}%</span></p>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* Small ☀️ 55° badge on each timeline tile */
 
 /* ---------- Wire up ---------- */
 document.addEventListener("DOMContentLoaded", () => {

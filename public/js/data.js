@@ -29,6 +29,7 @@ const STOPS = [
     desc: "Grab freshly baked bagels, breakfast sandwiches and coffee at Cohen's Bagel Company (opens 7 AM), then cross Boston Post Road to Salt Meadow Park for a picnic-table breakfast with the family — then it's onward to Newport.",
     addr: "1347 Boston Post Rd, Madison, CT 06443",
     near: "Cohen's Bagel Company, Madison, CT",
+    lat: 41.2779, lon: -72.6029,
     tint: "from-amber-400 to-yellow-500",
   },
   {
@@ -41,6 +42,7 @@ const STOPS = [
     desc: "The grandest of Newport's summer 'cottages'. 70-room Italian Renaissance palazzo overlooking the Atlantic — the must-see mansion of the Cliff Walk.",
     addr: "44 Ochre Point Ave, Newport, RI 02840",
     near: "The Breakers, Newport, RI",
+    lat: 41.4697, lon: -71.2985,
     tint: "from-amber-400 to-orange-500",
   },
   {
@@ -53,6 +55,7 @@ const STOPS = [
     desc: "William K. Vanderbilt's 'temple to the arts' for his wife Alva. Don't miss the Chinese Tea House on the seaside cliffs behind the house.",
     addr: "596 Bellevue Ave, Newport, RI 02840",
     near: "Marble House, Newport, RI",
+    lat: 41.4622, lon: -71.3049,
     tint: "from-rose-400 to-pink-600",
   },
   {
@@ -65,6 +68,7 @@ const STOPS = [
     desc: "Ramen & Asian-fusion bowls right by the harbor. After lunch, stroll the wharves, browse Thames Street boutiques and watch the boats in Bowen’s Wharf.",
     addr: "Long Wharf, Newport, RI 02840",
     near: "Yagi Noodles, Newport, RI",
+    lat: 41.4877, lon: -71.3169,
     tint: "from-teal-400 to-emerald-500",
   },
   {
@@ -77,6 +81,7 @@ const STOPS = [
     desc: "Roll the windows down for Newport's famous Ocean Drive — mansions, rocky coastline and sweeping Atlantic views along Ocean Ave. Plenty of pull-offs for photos.",
     addr: "Ocean Ave, Newport, RI 02840",
     near: "Ocean Drive, Newport, RI",
+    lat: 41.4522, lon: -71.3191,
     tint: "from-sky-400 to-cyan-500",
   },
   {
@@ -89,6 +94,7 @@ const STOPS = [
     desc: "Where Narragansett Bay meets the Atlantic. Kites, sea breeze and golden-hour views — the perfect end to the Newport leg of the trip.",
     addr: "Ocean Drive, Newport, RI 02840",
     near: "Brenton Point State Park, Newport, RI",
+    lat: 41.4488, lon: -71.3540,
     tint: "from-indigo-400 to-violet-500",
   },
   {
@@ -101,6 +107,7 @@ const STOPS = [
     desc: "A locally owned Fifth Ward cafe — specialty coffee, matcha, artisan pastries and breakfast sandwiches, with free on-site parking. ⚠️ Closes 3 PM daily, so swing by earlier in the day (or first thing next morning) if it's shut after the park.",
     addr: "7 Carroll Ave, Newport, RI 02840",
     near: "Ocean & Fifth Cafe, Newport, RI",
+    lat: 41.4801, lon: -71.3219,
     tint: "from-amber-500 to-orange-600",
   },
   {
@@ -113,6 +120,7 @@ const STOPS = [
     desc: "Base camp for the night. Good Indian restaurants, coffee and essentials are all a short drive away around Fall River.",
     addr: "360 Airport Rd, Fall River, MA 02720",
     near: "360 Airport Rd, Fall River, MA 02720",
+    lat: 41.7297, lon: -71.1032,
     tint: "from-blue-400 to-indigo-500",
   },
   {
@@ -125,6 +133,7 @@ const STOPS = [
     desc: "Evening visit to one of the nation's oldest zoos — in October this is prime time for the glowing Jack-O-Lantern Spectacular, with thousands of carved pumpkins lighting up the park after dark.",
     addr: "1000 Elmwood Ave, Providence, RI 02907",
     near: "Roger Williams Park Zoo, Providence, RI",
+    lat: 41.7856, lon: -71.4127,
     tint: "from-green-400 to-emerald-600",
   },
   {
@@ -137,6 +146,7 @@ const STOPS = [
     desc: "Coffee for the road, then west on I-95 toward Connecticut. Franklin Park, NJ is about 4 hours away with the lunch stop.",
     addr: "Downtown, Providence, RI 02903",
     near: "Downtown Providence, RI",
+    lat: 41.8240, lon: -71.4128,
     tint: "from-sky-400 to-blue-500",
   },
   {
@@ -149,6 +159,7 @@ const STOPS = [
     desc: "Halfway home — three great Indian options just off I-95. See the comparison below: Vedas for budget, Himalaya Sono for a relaxed family meal, Taj Stamford for fine dining.",
     addr: "388 Westport Ave, Norwalk, CT 06851",
     near: "Vedas Indian Cuisine, Norwalk, CT",
+    lat: 41.1298, lon: -73.4175,
     tint: "from-amber-400 to-orange-500",
   },
   {
@@ -161,6 +172,7 @@ const STOPS = [
     desc: "Back down I-95 past New York — home by late afternoon. What a weekend!",
     addr: "Franklin Park, NJ 08823",
     near: "Franklin Park, NJ",
+    lat: 40.4451, lon: -74.5446,
     tint: "from-emerald-400 to-teal-500",
   },
 ];
@@ -254,6 +266,9 @@ const WEATHER_POINTS = [
   { name: "Norwalk, CT",       sub: "Sunday lunch",        icon: "🍛", lat: 41.1177, lon: -73.4082, tint: "from-orange-500 to-red-500" },
   { name: "Franklin Park, NJ", sub: "Home",                icon: "🏠", lat: 40.4451, lon: -74.5446, tint: "from-emerald-400 to-teal-500" },
 ];
+
+/* Shared weather cache for all stops (fetched once, batch) */
+const stopWeather = {};
 
 /* WMO weather-code → emoji + label */
 function wmo(code) {
