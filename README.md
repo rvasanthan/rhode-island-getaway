@@ -13,9 +13,15 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 6. 🏨 Check-in: Holiday Inn Express Fall River North (360 Airport Rd, Fall River, MA)
 7. 🦁 Roger Williams Park Zoo — Saturday night, 8:00 PM
 
-**Day 2 — Sunday: Providence & Drive Home**
+**Day 2 — Sunday: Drive Home to New Jersey**
+8. 🧳 Depart Providence — 10:00 AM (I-95 South)
+9. 🍛 Lunch stop in Connecticut — 1:00–1:30 PM
+   - ⭐ #1 **Vedas Indian Cuisine**, Norwalk (Top pick · best value, $12–18/adult)
+   - #2 **Himalaya Sono**, Norwalk (Indian & Nepalese, 4.7★)
+   - #3 **Taj Indian Restaurant**, Stamford (fine dining, 4.7★)
+10. 🏠 Home — Franklin Park, NJ ~3:30 PM", "oldString": "**Day 2 — Sunday: Providence & Drive Home**
 8. 🏙️ Providence Downtown (brunch & stroll)
-9. 🚗 Drive back to Connecticut
+9. 🚗 Drive back to Connecticut"
 
 ## ✨ Features
 

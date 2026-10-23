@@ -53,6 +53,7 @@
       <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
         <a href="#itinerary" class="hover:text-white transition">Itinerary</a>
         <a href="#indian" class="hover:text-white transition">Indian Food Finder</a>
+        <a href="#drive-home" class="hover:text-white transition">Drive Home</a>
         <a href="#legend" class="hover:text-white transition">What’s Nearby</a>
       </div>
       <a href="#itinerary" class="md:hidden text-xs font-bold px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-slate-950">Plan</a>
@@ -79,7 +80,7 @@
 
       <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
         <div class="rounded-2xl border border-slate-700/60 bg-slate-900/60 backdrop-blur p-4"><p class="text-3xl font-black bg-gradient-to-r from-cyan-300 to-sky-400 bg-clip-text text-transparent">2</p><p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Days</p></div>
-        <div class="rounded-2xl border border-slate-700/60 bg-slate-900/60 backdrop-blur p-4"><p class="text-3xl font-black bg-gradient-to-r from-fuchsia-300 to-purple-400 bg-clip-text text-transparent">8</p><p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Stops</p></div>
+        <div class="rounded-2xl border border-slate-700/60 bg-slate-900/60 backdrop-blur p-4"><p class="text-3xl font-black bg-gradient-to-r from-fuchsia-300 to-purple-400 bg-clip-text text-transparent">10</p><p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Stops</p></div>
         <div class="rounded-2xl border border-slate-700/60 bg-slate-900/60 backdrop-blur p-4"><p class="text-3xl font-black bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">2</p><p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Mansions</p></div>
         <div class="rounded-2xl border border-slate-700/60 bg-slate-900/60 backdrop-blur p-4"><p class="text-3xl font-black bg-gradient-to-r from-emerald-300 to-teal-400 bg-clip-text text-transparent">1</p><p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Zoo</p></div>
       </div>
@@ -110,6 +111,19 @@
           <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">The three spots you asked about — one tap opens Google Maps with the best-rated Indian restaurants near each.</p>
         </div>
         <div id="indian-hubs" class="grid md:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ SUNDAY DRIVE HOME ══════════ -->
+    <section id="drive-home" class="relative py-16 md:py-24 bg-gradient-to-b from-slate-950 via-emerald-950/20 to-slate-950">
+      <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+          <p class="text-xs font-bold uppercase tracking-[0.4em] text-emerald-300 mb-3">🚗 Sunday Drive Home</p>
+          <h2 class="font-display text-4xl md:text-5xl font-black">Lunch Stops in Connecticut</h2>
+          <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Providence, RI → Franklin Park, NJ · Depart 10:00 AM · I-95 South · Lunch between 1:00 – 1:30 PM</p>
+        </div>
+        <div id="lunch-stops" class="grid md:grid-cols-3 gap-6"></div>
+        <p class="text-center text-xs text-slate-500 mt-8">Prices are per-adult estimates — tax, tip & drinks extra. Arrival times assume light traffic on I-95 S.</p>
       </div>
     </section>
 
@@ -160,8 +174,8 @@
     </div>
   </div>
 
-  <script src="js/data.js?v=6"></script>
-  <script src="js/app.js?v=6"></script>
+  <script src="js/data.js?v=7"></script>
+  <script src="js/app.js?v=7"></script>
   <script>
     /* Legend (static, built from CATEGORIES) */
     (function () {
