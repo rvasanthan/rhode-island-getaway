@@ -245,6 +245,32 @@ const INDIAN_HUBS = [
   },
 ];
 
+/* ---------- Route weather waypoints ---------- */
+const WEATHER_POINTS = [
+  { name: "Madison, CT",       sub: "Breakfast stop",      icon: "🥯", lat: 41.2795, lon: -72.6004, tint: "from-amber-400 to-yellow-500" },
+  { name: "Newport, RI",       sub: "Mansions & coast",    icon: "🏰", lat: 41.4901, lon: -71.3128, tint: "from-cyan-400 to-blue-500" },
+  { name: "Fall River, MA",    sub: "Hotel",               icon: "🏨", lat: 41.7015, lon: -71.1550, tint: "from-blue-400 to-indigo-500" },
+  { name: "Providence, RI",    sub: "Zoo & departure",     icon: "🦁", lat: 41.8240, lon: -71.4128, tint: "from-green-400 to-emerald-600" },
+  { name: "Norwalk, CT",       sub: "Sunday lunch",        icon: "🍛", lat: 41.1177, lon: -73.4082, tint: "from-orange-500 to-red-500" },
+  { name: "Franklin Park, NJ", sub: "Home",                icon: "🏠", lat: 40.4451, lon: -74.5446, tint: "from-emerald-400 to-teal-500" },
+];
+
+/* WMO weather-code → emoji + label */
+function wmo(code) {
+  if (code === 0) return { icon: "☀️", label: "Clear" };
+  if (code === 1) return { icon: "🌤️", label: "Mostly clear" };
+  if (code === 2) return { icon: "⛅", label: "Partly cloudy" };
+  if (code === 3) return { icon: "☁️", label: "Overcast" };
+  if (code === 45 || code === 48) return { icon: "🌫️", label: "Fog" };
+  if (code >= 51 && code <= 57) return { icon: "🌦️", label: "Drizzle" };
+  if (code >= 61 && code <= 67) return { icon: "🌧️", label: "Rain" };
+  if (code >= 71 && code <= 77) return { icon: "🌨️", label: "Snow" };
+  if (code >= 80 && code <= 82) return { icon: "🌦️", label: "Showers" };
+  if (code >= 85 && code <= 86) return { icon: "🌨️", label: "Snow showers" };
+  if (code >= 95) return { icon: "⛈️", label: "Thunderstorms" };
+  return { icon: "🌡️", label: "—" };
+}
+
 /* Build the link set for one stop */
 function linksFor(near) {
   return CATEGORIES.map((c) => ({

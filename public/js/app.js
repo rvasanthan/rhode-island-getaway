@@ -150,11 +150,79 @@ function closeModal() {
   document.body.classList.remove("overflow-hidden");
 }
 
+/* ---------- Weather across the route (Open-Meteo, no key) ---------- */
+async function renderWeather() {
+  const grid = $("#weather-grid");
+  const stamp = $("#weather-updated");
+
+  const lats = WEATHER_POINTS.map((p) => p.lat).join(",");
+  const lons = WEATHER_POINTS.map((p) => p.lon).join(",");
+  const url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}` +
+    `&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m` +
+    `&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code` +
+    `&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=3`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const arr = Array.isArray(data) ? data : [data];
+
+    grid.innerHTML = "";
+    arr.forEach((d, i) => {
+      const p = WEATHER_POINTS[i];
+      if (!d || !d.current) return;
+      const cur = d.current;
+      const w = wmo(cur.weather_code);
+      const tSat = d.daily?.weather_code?.[1] != null ? wmo(d.daily.weather_code[1]) : null;
+      const tSun = d.daily?.weather_code?.[2] != null ? wmo(d.daily.weather_code[2]) : null;
+      const rain = (v) => (v == null ? "—" : `${Math.round(v)}%`);
+
+      const el = document.createElement("div");
+      el.className = `rounded-3xl p-[2px] bg-gradient-to-br ${p.tint} shadow-xl`;
+      el.innerHTML = `
+        <div class="rounded-3xl bg-slate-900/95 p-5 h-full">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-display font-bold text-white">${p.name}</p>
+              <p class="text-[11px] text-slate-400">${p.icon} ${p.sub}</p>
+            </div>
+            <span class="text-4xl">${w.icon}</span>
+          </div>
+          <div class="flex items-end gap-2 mt-3">
+            <span class="text-4xl font-black text-white">${Math.round(cur.temperature_2m)}°</span>
+            <span class="text-xs text-slate-400 pb-1.5">feels ${Math.round(cur.apparent_temperature)}°F · ${w.label}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 mt-4 text-center">
+            <div class="rounded-xl bg-slate-800/70 border border-slate-700/60 py-2">
+              <p class="text-[10px] uppercase tracking-wider text-slate-400">Sat</p>
+              <p class="text-sm font-bold text-slate-100">${tSat ? tSat.icon : ""} ${Math.round(d.daily.temperature_2m_min[1])}°/${Math.round(d.daily.temperature_2m_max[1])}°</p>
+              <p class="text-[10px] text-sky-300">☔ ${rain(d.daily.precipitation_probability_max?.[1])}</p>
+            </div>
+            <div class="rounded-xl bg-slate-800/70 border border-slate-700/60 py-2">
+              <p class="text-[10px] uppercase tracking-wider text-slate-400">Sun</p>
+              <p class="text-sm font-bold text-slate-100">${tSun ? tSun.icon : ""} ${Math.round(d.daily.temperature_2m_min[2])}°/${Math.round(d.daily.temperature_2m_max[2])}°</p>
+              <p class="text-[10px] text-sky-300">☔ ${rain(d.daily.precipitation_probability_max?.[2])}</p>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500 mt-3">💨 ${Math.round(cur.wind_speed_10m)} mph wind</p>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+
+    stamp.textContent = `Updated ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })} · Open-Meteo forecast`;
+  } catch (e) {
+    stamp.textContent = "Weather unavailable right now — check back shortly.";
+  }
+}
+
 /* ---------- Wire up ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
   renderHubs();
   renderLunchStops();
+  renderWeather();
 
   $("#modal-close").addEventListener("click", closeModal);
   $("#modal-backdrop").addEventListener("click", closeModal);

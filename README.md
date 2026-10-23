@@ -29,6 +29,7 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 
 - **Interactive timeline** — tap any stop to open a detail card
 - **Interactive timeline** — tap any stop for details and a big one-tap Google Maps button
+- **Live route weather** — current conditions + Sat/Sun forecast for every waypoint (Open-Meteo, no API key)
 - **Indian-food hub finder** for the three key anchors: Holiday Inn Fall River, Roger Williams Zoo, and Providence Downtown
 - All links are live Google Maps searches — always current ratings, hours and directions
 - Tailwind CSS, single-page static app, mobile-friendly

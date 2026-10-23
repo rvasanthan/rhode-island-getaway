@@ -52,6 +52,7 @@
       </a>
       <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
         <a href="#itinerary" class="hover:text-white transition">Itinerary</a>
+        <a href="#weather" class="hover:text-white transition">Weather</a>
         <a href="#indian" class="hover:text-white transition">Indian Food Finder</a>
         <a href="#drive-home" class="hover:text-white transition">Drive Home</a>
       </div>
@@ -99,6 +100,21 @@
         <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Tap any stop for details and a one-tap Google Maps link.</p>
       </div>
       <div id="timeline" class="space-y-16"></div>
+    </section>
+
+    <!-- ══════════ ROUTE WEATHER ══════════ -->
+    <section id="weather" class="relative py-16 md:py-24 bg-gradient-to-b from-slate-950 via-sky-950/20 to-slate-950">
+      <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+          <p class="text-xs font-bold uppercase tracking-[0.4em] text-sky-300 mb-3">🌦️ Pack Accordingly</p>
+          <h2 class="font-display text-4xl md:text-5xl font-black">Weather Along the Route</h2>
+          <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Live conditions plus the Saturday & Sunday forecast for every stop from Madison to Franklin Park.</p>
+        </div>
+        <div id="weather-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <p class="col-span-full text-center text-slate-500 text-sm animate-pulse">Loading forecast…</p>
+        </div>
+        <p id="weather-updated" class="text-center text-xs text-slate-500 mt-8"></p>
+      </div>
     </section>
 
     <!-- ══════════ INDIAN FOOD FINDER ══════════ -->
@@ -162,7 +178,7 @@
     </div>
   </div>
 
-  <script src="js/data.js?v=10"></script>
-  <script src="js/app.js?v=10"></script>
+  <script src="js/data.js?v=11"></script>
+  <script src="js/app.js?v=11"></script>
 </body>
 </html>
