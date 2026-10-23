@@ -94,7 +94,7 @@ const STOPS = [
   {
     id: "zoo",
     day: 2,
-    time: "10:00 AM",
+    time: "8:00 AM",
     name: "Roger Williams Park Zoo",
     icon: "🦁",
     tagline: "One of the nation's oldest zoos",
