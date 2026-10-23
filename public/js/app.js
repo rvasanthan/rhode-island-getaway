@@ -460,10 +460,43 @@ const Expenses = (() => {
   return { init, add, rerender: render };
 })();
 
+/* ---------- Render Providence Indian restaurants ---------- */
+function renderPvdIndian() {
+  const grid = $("#pvd-indian-grid");
+  if (!grid) return;
+  PVD_INDIAN.forEach((r) => {
+    const el = document.createElement("div");
+    el.className = `rounded-3xl p-[2px] bg-gradient-to-br ${r.tint} shadow-xl`;
+    el.innerHTML = `
+      <div class="rounded-3xl bg-slate-900/95 p-5 h-full flex flex-col">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300">${r.badge}</span>
+          <span class="text-xs font-bold text-slate-300">★ ${r.rating} <span class="text-slate-500 font-normal">(${r.reviews})</span></span>
+        </div>
+        <h3 class="font-display font-black text-lg text-white">${r.name}</h3>
+        <p class="text-xs text-slate-400 mt-1">📍 ${r.addr}</p>
+        <p class="text-xs text-emerald-300 font-semibold mt-1">${r.price} per person</p>
+        <p class="text-xs text-slate-300 mt-2 flex-1">${r.note}</p>
+        <div class="mt-4 space-y-2">
+          <a href="${r.mapsUrl}" target="_blank" rel="noopener"
+             class="block w-full text-center text-sm font-bold rounded-xl bg-gradient-to-r ${r.tint} text-slate-950 py-2.5 hover:opacity-90 transition">🗺️ Google Maps →</a>
+          <div class="grid grid-cols-2 gap-2">
+            <a href="${r.site}" target="_blank" rel="noopener"
+               class="text-center text-xs font-semibold rounded-xl border border-slate-600 text-slate-200 py-2 hover:bg-slate-800 transition">🌐 Website</a>
+            <a href="tel:${r.phone}"
+               class="text-center text-xs font-semibold rounded-xl border border-slate-600 text-slate-200 py-2 hover:bg-slate-800 transition">📞 Call</a>
+          </div>
+        </div>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
 /* ---------- Wire up ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
   renderLunchStops();
+  renderPvdIndian();
   renderWeather();
   Expenses.init();
 
