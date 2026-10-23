@@ -92,6 +92,18 @@ const STOPS = [
     tint: "from-indigo-400 to-violet-500",
   },
   {
+    id: "ocean-fifth",
+    day: 1,
+    time: "6:00 PM",
+    name: "Ocean & Fifth Cafe",
+    icon: "☕",
+    tagline: "Specialty coffee & the famous cookie croissant",
+    desc: "A locally owned Fifth Ward cafe — specialty coffee, matcha, artisan pastries and breakfast sandwiches, with free on-site parking. ⚠️ Closes 3 PM daily, so swing by earlier in the day (or first thing next morning) if it's shut after the park.",
+    addr: "7 Carroll Ave, Newport, RI 02840",
+    near: "Ocean & Fifth Cafe, Newport, RI",
+    tint: "from-amber-500 to-orange-600",
+  },
+  {
     id: "holiday-inn",
     day: 1,
     time: "7:30 PM",
