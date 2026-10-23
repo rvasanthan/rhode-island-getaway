@@ -14,8 +14,8 @@ const CATEGORIES = [
 
 /* ---------- Trip timeline ---------- */
 const TRIP_DAYS = [
-  { day: 1, title: "Newport — Mansions & Coast", date: "Day 1", tint: "from-cyan-400 to-blue-500" },
-  { day: 2, title: "Saturday — Zoo Night & Downtown", date: "Day 2 · Saturday", tint: "from-fuchsia-400 to-purple-500" },
+  { day: 1, title: "Saturday — Newport & Zoo Night", date: "Day 1 · Saturday", tint: "from-cyan-400 to-blue-500" },
+  { day: 2, title: "Sunday — Providence & Drive Home", date: "Day 2 · Sunday", tint: "from-fuchsia-400 to-purple-500" },
 ];
 
 const STOPS = [
@@ -92,20 +92,8 @@ const STOPS = [
     tint: "from-blue-400 to-indigo-500",
   },
   {
-    id: "providence",
-    day: 2,
-    time: "2:00 PM",
-    name: "Providence Downtown",
-    icon: "🏙️",
-    tagline: "The Creative Capital",
-    desc: "Spend the afternoon downtown: Waterplace Park, the Riverwalk, Westminster Street shops and an early Indian dinner before the zoo.",
-    addr: "Downtown, Providence, RI 02903",
-    near: "Downtown Providence, RI",
-    tint: "from-fuchsia-400 to-purple-600",
-  },
-  {
     id: "zoo",
-    day: 2,
+    day: 1,
     time: "8:00 PM",
     name: "Roger Williams Park Zoo",
     icon: "🦁",
@@ -114,6 +102,30 @@ const STOPS = [
     addr: "1000 Elmwood Ave, Providence, RI 02907",
     near: "Roger Williams Park Zoo, Providence, RI",
     tint: "from-green-400 to-emerald-600",
+  },
+  {
+    id: "providence",
+    day: 2,
+    time: "11:00 AM",
+    name: "Providence Downtown",
+    icon: "🏙️",
+    tagline: "The Creative Capital — Sunday brunch & stroll",
+    desc: "Slow Sunday morning downtown: Waterplace Park, the Riverwalk, Westminster Street shops and a great Indian lunch before hitting the road.",
+    addr: "Downtown, Providence, RI 02903",
+    near: "Downtown Providence, RI",
+    tint: "from-fuchsia-400 to-purple-600",
+  },
+  {
+    id: "connecticut",
+    day: 2,
+    time: "3:00 PM",
+    name: "Drive Back to Connecticut",
+    icon: "🚗",
+    tagline: "Homeward bound",
+    desc: "Head west on I-95 toward Connecticut — coffee for the road, one last ocean-state goodbye, and home by evening.",
+    addr: "I-95 W toward Connecticut",
+    near: "I-95 Providence, RI",
+    tint: "from-slate-400 to-slate-600",
   },
 ];
 
