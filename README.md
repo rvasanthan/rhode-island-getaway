@@ -6,8 +6,8 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 
 **Day 1 — Saturday: Newport, Mansions & Coast**
 1. 🥯 Breakfast: Cohen's Bagel Company + Salt Meadow Park picnic, Madison, CT (7:30–8:15 AM)
-2. 🏰 The Breakers
-3. 🏛️ Marble House
+2. �️ Marble House
+3. 🏰 The Breakers
 4. 🍜 Newport Downtown — Yagi Noodles (lunch)
 5. 🌊 Ocean Drive / Ocean Ave
 6. 🪁 Brenton Point State Park
