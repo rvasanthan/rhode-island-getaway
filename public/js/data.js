@@ -9,14 +9,8 @@ const maps = (q) =>
 /* Categories of nearby links generated for every stop */
 const CATEGORIES = [
   { key: "indian",     label: "Indian Restaurants",  icon: "🍛", query: (n) => `Indian restaurants near ${n}`,        accent: "from-orange-500 to-red-500" },
-  { key: "thai",       label: "Thai Restaurants",    icon: "🍜", query: (n) => `Thai restaurants near ${n}`,          accent: "from-emerald-500 to-teal-500" },
-  { key: "mexican",    label: "Mexican Restaurants", icon: "🌮", query: (n) => `Mexican restaurants near ${n}`,       accent: "from-yellow-500 to-orange-500" },
-  { key: "chickfila",  label: "Chick-fil-A",         icon: "🐔", query: (n) => `Chick-fil-A near ${n}`,               accent: "from-red-500 to-rose-600" },
   { key: "coffee",     label: "Best Coffee Shops",   icon: "☕", query: (n) => `best coffee shops near ${n}`,         accent: "from-amber-600 to-yellow-700" },
-  { key: "dunkin",     label: "Dunkin'",             icon: "🍩", query: (n) => `Dunkin near ${n}`,                    accent: "from-pink-500 to-orange-400" },
   { key: "starbucks",  label: "Starbucks",           icon: "🥤", query: (n) => `Starbucks near ${n}`,                 accent: "from-green-600 to-emerald-700" },
-  { key: "pharmacy",   label: "Pharmacies",          icon: "💊", query: (n) => `pharmacy CVS Walgreens near ${n}`,    accent: "from-sky-500 to-blue-600" },
-  { key: "stores",     label: "Department Stores",   icon: "🛒", query: (n) => `department store Target Walmart near ${n}`, accent: "from-violet-500 to-purple-600" },
 ];
 
 /* ---------- Trip timeline ---------- */

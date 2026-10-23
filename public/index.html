@@ -96,7 +96,7 @@
       <div class="text-center mb-14">
         <p class="text-xs font-bold uppercase tracking-[0.4em] text-fuchsia-300 mb-3">Trip Timeline</p>
         <h2 class="font-display text-4xl md:text-5xl font-black">Your Journey, Stop by Stop</h2>
-        <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Tap any stop to find nearby Indian, Thai & Mexican restaurants, Chick-fil-A, coffee shops, pharmacies and department stores.</p>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Tap any stop to find nearby Indian restaurants, coffee shops and Starbucks.</p>
       </div>
       <div id="timeline" class="space-y-16"></div>
     </section>
@@ -145,12 +145,15 @@
         <p id="modal-tagline" class="text-sm text-slate-400 italic mt-1"></p>
         <p id="modal-desc" class="text-sm md:text-base text-slate-300 mt-4 leading-relaxed"></p>
 
-        <a id="modal-place-link" href="#" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200 transition">
-          📍 <span id="modal-addr"></span> <span>↗</span>
+        <a id="modal-place-link" href="#" target="_blank" rel="noopener"
+           class="mt-5 flex items-center justify-center gap-3 w-full rounded-2xl border-2 border-cyan-400/60 bg-cyan-500/10 px-6 py-4 text-base md:text-lg font-bold text-cyan-200 hover:bg-cyan-500/25 hover:border-cyan-300 hover:scale-[1.02] transition shadow-lg shadow-cyan-500/10">
+          <span class="text-2xl">📍</span>
+          <span id="modal-addr" class="underline underline-offset-4 decoration-cyan-400/60"></span>
+          <span class="text-xl">↗</span>
         </a>
 
         <div class="mt-6 pt-5 border-t border-slate-800">
-          <p class="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-4">Nearby — Food, Coffee & Essentials</p>
+          <p class="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-4">Nearby — Indian Food & Coffee</p>
           <div id="modal-links" class="grid sm:grid-cols-2 gap-3"></div>
         </div>
       </div>
