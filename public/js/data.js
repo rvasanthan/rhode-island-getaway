@@ -15,7 +15,7 @@ const CATEGORIES = [
 /* ---------- Trip timeline ---------- */
 const TRIP_DAYS = [
   { day: 1, title: "Newport — Mansions & Coast", date: "Day 1", tint: "from-cyan-400 to-blue-500" },
-  { day: 2, title: "Providence — Zoo & Downtown", date: "Day 2", tint: "from-fuchsia-400 to-purple-500" },
+  { day: 2, title: "Saturday — Zoo Night & Downtown", date: "Day 2 · Saturday", tint: "from-fuchsia-400 to-purple-500" },
 ];
 
 const STOPS = [
@@ -92,28 +92,28 @@ const STOPS = [
     tint: "from-blue-400 to-indigo-500",
   },
   {
-    id: "zoo",
-    day: 2,
-    time: "8:00 AM",
-    name: "Roger Williams Park Zoo",
-    icon: "🦁",
-    tagline: "One of the nation's oldest zoos",
-    desc: "40 acres inside the beautiful Roger Williams Park — elephants, giraffes, red pandas and the rainforest building. Arrive early to beat the crowds.",
-    addr: "1000 Elmwood Ave, Providence, RI 02907",
-    near: "Roger Williams Park Zoo, Providence, RI",
-    tint: "from-green-400 to-emerald-600",
-  },
-  {
     id: "providence",
     day: 2,
     time: "2:00 PM",
     name: "Providence Downtown",
     icon: "🏙️",
     tagline: "The Creative Capital",
-    desc: "Wrap up the trip downtown: Waterplace Park, the Riverwalk, Westminster Street shops and — the highlight — excellent Indian restaurants for a farewell meal.",
+    desc: "Spend the afternoon downtown: Waterplace Park, the Riverwalk, Westminster Street shops and an early Indian dinner before the zoo.",
     addr: "Downtown, Providence, RI 02903",
     near: "Downtown Providence, RI",
     tint: "from-fuchsia-400 to-purple-600",
+  },
+  {
+    id: "zoo",
+    day: 2,
+    time: "8:00 PM",
+    name: "Roger Williams Park Zoo",
+    icon: "🦁",
+    tagline: "Saturday night at the zoo",
+    desc: "Evening visit to one of the nation's oldest zoos — in October this is prime time for the glowing Jack-O-Lantern Spectacular, with thousands of carved pumpkins lighting up the park after dark.",
+    addr: "1000 Elmwood Ave, Providence, RI 02907",
+    near: "Roger Williams Park Zoo, Providence, RI",
+    tint: "from-green-400 to-emerald-600",
   },
 ];
 
