@@ -55,6 +55,7 @@
         <a href="#weather" class="hover:text-white transition">Weather</a>
         <a href="#indian" class="hover:text-white transition">Indian Food Finder</a>
         <a href="#drive-home" class="hover:text-white transition">Drive Home</a>
+        <a href="#expenses" class="hover:text-white transition">Expenses</a>
       </div>
       <a href="#itinerary" class="md:hidden text-xs font-bold px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-slate-950">Plan</a>
     </div>
@@ -142,6 +143,79 @@
       </div>
     </section>
 
+    <!-- ══════════ EXPENSES ══════════ -->
+    <section id="expenses" class="relative py-16 md:py-24 bg-gradient-to-b from-slate-950 via-emerald-950/20 to-slate-950">
+      <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+          <p class="text-xs font-bold uppercase tracking-[0.4em] text-emerald-300 mb-3">💸 Trip Kitty</p>
+          <h2 class="font-display text-4xl md:text-5xl font-black">Expenses</h2>
+          <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm md:text-base">Anyone on the trip can add what they spent — it syncs live for everyone.</p>
+          <p id="exp-status" class="mt-2 text-xs text-slate-500">⏳ Connecting to shared store…</p>
+        </div>
+
+        <div class="grid lg:grid-cols-5 gap-6">
+          <!-- Add form -->
+          <form id="exp-form" class="lg:col-span-2 rounded-3xl p-[2px] bg-gradient-to-br from-emerald-400 to-teal-500 shadow-xl h-fit">
+            <div class="rounded-3xl bg-slate-900/95 p-6 space-y-3">
+              <h3 class="font-display font-bold text-lg text-white">Add an expense</h3>
+              <input id="exp-title" required placeholder="What was it? (e.g. Yagi Noodles lunch)"
+                     class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400" />
+              <div class="grid grid-cols-2 gap-3">
+                <input id="exp-amount" required type="number" min="0.01" step="0.01" placeholder="Amount $"
+                       class="rounded-xl bg-slate-800/80 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400" />
+                <select id="exp-category" class="rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
+                  <option value="food">🍽️ Food & Drinks</option>
+                  <option value="tickets">🎟️ Tickets & Entry</option>
+                  <option value="gas">⛽ Gas & Tolls</option>
+                  <option value="hotel">🏨 Hotel</option>
+                  <option value="shopping">🛍️ Shopping</option>
+                  <option value="other">💵 Other</option>
+                </select>
+              </div>
+              <input id="exp-paidby" placeholder="Paid by (your name)"
+                     class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400" />
+              <select id="exp-stop" class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
+                <option value="">📍 Link to a stop (optional)</option>
+              </select>
+              <p id="exp-error" class="text-xs text-red-400"></p>
+              <button id="exp-add-btn" type="submit"
+                      class="w-full rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 font-bold py-3.5 hover:opacity-90 transition">
+                ＋ Add Expense
+              </button>
+            </div>
+          </form>
+
+          <!-- Summary -->
+          <div class="lg:col-span-3 space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 text-center">
+                <p class="text-3xl font-black bg-gradient-to-r from-emerald-300 to-teal-400 bg-clip-text text-transparent" id="exp-total">$0.00</p>
+                <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Total Spent</p>
+              </div>
+              <div class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5 text-center">
+                <p class="text-3xl font-black bg-gradient-to-r from-cyan-300 to-sky-400 bg-clip-text text-transparent" id="exp-count">0</p>
+                <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Entries</p>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400 mb-3">By Category</p>
+              <div id="exp-by-cat" class="space-y-2"></div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400 mb-3">Paid By</p>
+              <div id="exp-by-person" class="grid sm:grid-cols-2 gap-2"></div>
+            </div>
+
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400 mb-3">Entries</p>
+              <div id="exp-list" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ══════════ FOOTER ══════════ -->
@@ -180,7 +254,7 @@
     </div>
   </div>
 
-  <script src="js/data.js?v=12"></script>
-  <script src="js/app.js?v=12"></script>
+  <script src="js/data.js?v=13"></script>
+  <script src="js/app.js?v=13"></script>
 </body>
 </html>

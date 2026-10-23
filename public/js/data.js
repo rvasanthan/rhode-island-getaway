@@ -267,6 +267,22 @@ const WEATHER_POINTS = [
   { name: "Franklin Park, NJ", sub: "Home",                icon: "🏠", lat: 40.4451, lon: -74.5446, tint: "from-emerald-400 to-teal-500" },
 ];
 
+/* ---------- Firebase (shared expense store) ---------- */
+const FIREBASE_CONFIG = {
+  projectId: "rhode-island-getaway",
+  apiKey: "AIzaSyCPSnbKQSgOKnNy8YAgScPbOIAZDYrwMaQ",
+  authDomain: "rhode-island-getaway.firebaseapp.com",
+};
+
+const EXPENSE_CATEGORIES = [
+  { key: "food", label: "Food & Drinks", icon: "🍽️" },
+  { key: "tickets", label: "Tickets & Entry", icon: "🎟️" },
+  { key: "gas", label: "Gas & Tolls", icon: "⛽" },
+  { key: "hotel", label: "Hotel", icon: "🏨" },
+  { key: "shopping", label: "Shopping", icon: "🛍️" },
+  { key: "other", label: "Other", icon: "💵" },
+];
+
 /* Shared weather cache for all stops (fetched once, batch) */
 const stopWeather = {};
 

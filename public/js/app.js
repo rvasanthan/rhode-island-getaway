@@ -277,12 +277,187 @@ function stopWeatherHTML(s) {
 
 /* Small ☀️ 55° badge on each timeline tile */
 
+/* ---------- Expense tracker (Firestore-backed, shared) ---------- */
+const Expenses = (() => {
+  let expenses = [];
+  let db = null;
+  let dbReady = false;
+  let dbErr = "";
+  const LS_KEY = "ri-expenses";
+
+  const fmt = (n) => `$${Number(n).toFixed(2)}`;
+  const catMeta = (key) => EXPENSE_CATEGORIES.find((c) => c.key === key) || EXPENSE_CATEGORIES.at(-1);
+
+  function loadLocal() {
+    try { expenses = JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch { expenses = []; }
+  }
+  function saveLocal() {
+    localStorage.setItem(LS_KEY, JSON.stringify(expenses));
+  }
+
+  async function init() {
+    loadLocal();
+    render();
+    try {
+      const [{ initializeApp }, fs] = await Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"),
+      ]);
+      const app = initializeApp(FIREBASE_CONFIG);
+      db = fs.getFirestore(app);
+      const q = fs.query(fs.collection(db, "expenses"), fs.orderBy("createdAt", "desc"));
+      fs.onSnapshot(q, (snap) => {
+        expenses = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        dbReady = true;
+        render();
+      }, (err) => { dbErr = err.message; setStatus(); });
+    } catch (e) {
+      dbErr = e.message;
+      setStatus();
+    }
+    setStatus();
+  }
+
+  function setStatus() {
+    const el = $("#exp-status");
+    if (!el) return;
+    el.textContent = dbReady
+      ? "🟢 Shared — anyone with the link can add expenses"
+      : dbErr
+        ? "🟡 Offline mode — saved on this device only"
+        : "⏳ Connecting to shared store…";
+  }
+
+  async function add({ title, amount, category, paidBy, stop }) {
+    const entry = {
+      title: title.trim(),
+      amount: Math.round(Number(amount) * 100) / 100,
+      category,
+      paidBy: paidBy.trim() || "Someone",
+      stop: stop || "",
+      createdAt: Date.now(),
+    };
+    if (!entry.title || !(entry.amount > 0)) return "Enter a description and a valid amount.";
+    if (dbReady) {
+      const fs = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await fs.addDoc(fs.collection(db, "expenses"), entry);
+    } else {
+      entry.id = "local-" + entry.createdAt;
+      expenses.unshift(entry);
+      saveLocal();
+      render();
+    }
+    return null;
+  }
+
+  async function remove(id) {
+    if (dbReady && !String(id).startsWith("local-")) {
+      const fs = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
+      await fs.deleteDoc(fs.doc(db, "expenses", id));
+    } else {
+      expenses = expenses.filter((e) => e.id !== id);
+      saveLocal();
+      render();
+    }
+  }
+
+  function render() {
+    const list = $("#exp-list");
+    if (!list) return;
+
+    /* summary */
+    const total = expenses.reduce((s, e) => s + e.amount, 0);
+    const byCat = {};
+    const byPerson = {};
+    expenses.forEach((e) => {
+      byCat[e.category] = (byCat[e.category] || 0) + e.amount;
+      byPerson[e.paidBy] = (byPerson[e.paidBy] || 0) + e.amount;
+    });
+    $("#exp-total").textContent = fmt(total);
+    $("#exp-count").textContent = expenses.length;
+
+    $("#exp-by-cat").innerHTML = Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([k, v]) => {
+      const m = catMeta(k);
+      const pct = total ? Math.round((v / total) * 100) : 0;
+      return `
+        <div class="flex items-center gap-2 text-xs">
+          <span class="w-5">${m.icon}</span>
+          <span class="w-28 text-slate-300">${m.label}</span>
+          <div class="flex-1 h-2 rounded-full bg-slate-800 overflow-hidden">
+            <div class="h-full rounded-full bg-gradient-to-r from-fuchsia-400 to-cyan-400" style="width:${pct}%"></div>
+          </div>
+          <span class="w-16 text-right font-semibold text-slate-100">${fmt(v)}</span>
+        </div>`;
+    }).join("") || '<p class="text-xs text-slate-500">No expenses yet.</p>';
+
+    $("#exp-by-person").innerHTML = Object.entries(byPerson).sort((a, b) => b[1] - a[1]).map(([k, v]) =>
+      `<div class="flex items-center justify-between rounded-xl bg-slate-800/70 border border-slate-700/60 px-3 py-2">
+        <span class="text-xs font-semibold text-slate-200">🧑 ${k}</span>
+        <span class="text-xs font-black text-emerald-300">${fmt(v)}</span>
+      </div>`).join("") || '<p class="text-xs text-slate-500">—</p>';
+
+    /* entries */
+    list.innerHTML = expenses.map((e) => {
+      const m = catMeta(e.category);
+      const dt = new Date(e.createdAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+      return `
+        <div class="flex items-center gap-3 rounded-2xl bg-slate-900/70 border border-slate-700/60 px-4 py-3">
+          <span class="text-xl">${m.icon}</span>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold text-white truncate">${e.title}</p>
+            <p class="text-[11px] text-slate-400">${e.paidBy}${e.stop ? ` · ${e.stop}` : ""} · ${dt}</p>
+          </div>
+          <span class="text-sm font-black text-emerald-300">${fmt(e.amount)}</span>
+          <button data-del="${e.id}" class="text-slate-500 hover:text-red-400 transition text-sm px-1" title="Delete">🗑️</button>
+        </div>`;
+    }).join("") || '<p class="text-sm text-slate-500 text-center py-4">No expenses yet — add the first one above!</p>';
+
+    list.querySelectorAll("[data-del]").forEach((b) =>
+      b.addEventListener("click", () => remove(b.getAttribute("data-del")))
+    );
+  }
+
+  return { init, add };
+})();
+
 /* ---------- Wire up ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
   renderHubs();
   renderLunchStops();
   renderWeather();
+  Expenses.init();
+
+  /* populate the "link to a stop" dropdown */
+  const stopSel = $("#exp-stop");
+  STOPS.forEach((s) => {
+    const o = document.createElement("option");
+    o.value = s.name;
+    o.textContent = `${s.icon} ${s.name}`;
+    stopSel.appendChild(o);
+  });
+
+  $("#exp-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = $("#exp-add-btn");
+    btn.disabled = true;
+    btn.textContent = "Adding…";
+    const err = await Expenses.add({
+      title: $("#exp-title").value,
+      amount: $("#exp-amount").value,
+      category: $("#exp-category").value,
+      paidBy: $("#exp-paidby").value,
+      stop: $("#exp-stop").value,
+    });
+    btn.disabled = false;
+    btn.textContent = "＋ Add Expense";
+    if (err) {
+      $("#exp-error").textContent = err;
+    } else {
+      $("#exp-error").textContent = "";
+      e.target.reset();
+    }
+  });
 
   $("#modal-close").addEventListener("click", closeModal);
   $("#modal-backdrop").addEventListener("click", closeModal);
