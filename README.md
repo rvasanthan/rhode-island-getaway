@@ -21,7 +21,7 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 - **Interactive timeline** — tap any stop to open a detail card
 - **Every stop includes Google Maps links** for:
   - 🍛 Indian restaurants
-  - ☕ Best coffee shops · 🥤 Starbucks
+  - ☕ Best coffee shops
 - **Big tappable “Open in Google Maps” button** on every stop card
 - **Indian-food hub finder** for the three key anchors: Holiday Inn Fall River, Roger Williams Zoo, and Providence Downtown
 - All links are live Google Maps searches — always current ratings, hours and directions

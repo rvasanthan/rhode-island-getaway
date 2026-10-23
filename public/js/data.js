@@ -10,7 +10,6 @@ const maps = (q) =>
 const CATEGORIES = [
   { key: "indian",     label: "Indian Restaurants",  icon: "🍛", query: (n) => `Indian restaurants near ${n}`,        accent: "from-orange-500 to-red-500" },
   { key: "coffee",     label: "Best Coffee Shops",   icon: "☕", query: (n) => `best coffee shops near ${n}`,         accent: "from-amber-600 to-yellow-700" },
-  { key: "starbucks",  label: "Starbucks",           icon: "🥤", query: (n) => `Starbucks near ${n}`,                 accent: "from-green-600 to-emerald-700" },
 ];
 
 /* ---------- Trip timeline ---------- */
