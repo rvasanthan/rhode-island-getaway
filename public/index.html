@@ -176,13 +176,18 @@
                      class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400" />
               <div class="grid grid-cols-2 gap-3">
                 <select id="exp-family" class="rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
-                  <option value="A">👨‍👩‍👧 Family A</option>
-                  <option value="B">👨‍👩‍👦 Family B</option>
+                  <option value="A">👨‍👩‍👧 Family A paid</option>
+                  <option value="B">👨‍👩‍👦 Family B paid</option>
                 </select>
-                <select id="exp-stop" class="rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
-                  <option value="">📍 Stop (optional)</option>
+                <select id="exp-split" class="rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
+                  <option value="shared">🔀 Shared (50/50)</option>
+                  <option value="A">👨‍👩‍👧 Family A only</option>
+                  <option value="B">👨‍👩‍👦 Family B only</option>
                 </select>
               </div>
+              <select id="exp-stop" class="w-full rounded-xl bg-slate-800/80 border border-slate-700 px-3 py-3 text-sm text-white focus:outline-none focus:border-emerald-400">
+                <option value="">📍 Stop (optional)</option>
+              </select>
               <p id="exp-error" class="text-xs text-red-400"></p>
               <button id="exp-add-btn" type="submit"
                       class="w-full rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 font-bold py-3.5 hover:opacity-90 transition">
@@ -211,19 +216,21 @@
                   <input id="fam-a-name" placeholder="Family A" value="Family A"
                          class="w-full bg-transparent border-b border-fuchsia-400/40 text-sm font-bold text-fuchsia-200 pb-1 focus:outline-none focus:border-fuchsia-300" />
                   <p class="text-2xl font-black text-white mt-2" id="fam-a-total">$0.00</p>
-                  <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Spent by <span id="fam-a-label">Family A</span></p>
+                  <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Paid by <span id="fam-a-label">Family A</span></p>
+                  <p class="text-[11px] text-fuchsia-300/90 mt-1" id="fam-a-share"></p>
                 </div>
                 <div class="rounded-2xl border border-cyan-500/40 bg-cyan-500/10 p-4">
                   <input id="fam-b-name" placeholder="Family B" value="Family B"
                          class="w-full bg-transparent border-b border-cyan-400/40 text-sm font-bold text-cyan-200 pb-1 focus:outline-none focus:border-cyan-300" />
                   <p class="text-2xl font-black text-white mt-2" id="fam-b-total">$0.00</p>
-                  <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Spent by <span id="fam-b-label">Family B</span></p>
+                  <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">Paid by <span id="fam-b-label">Family B</span></p>
+                  <p class="text-[11px] text-cyan-300/90 mt-1" id="fam-b-share"></p>
                 </div>
               </div>
               <div class="mt-4" id="exp-settle-wrap">
                 <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400 mb-2">Settlement</p>
                 <div id="exp-settle" class="rounded-2xl px-5 py-4 text-center font-display font-bold text-lg md:text-xl border border-slate-700/60 bg-slate-900/70 text-slate-200">Add expenses to see who owes what.</div>
-                <p class="text-[10px] text-slate-500 mt-2 text-center">Split 50/50 between the two families.</p>
+                <p class="text-[10px] text-slate-500 mt-2 text-center">Individual expenses stay with one family; shared expenses split 50/50.</p>
               </div>
             </div>
 
@@ -283,7 +290,7 @@
     </div>
   </div>
 
-  <script src="js/data.js?v=18"></script>
-  <script src="js/app.js?v=18"></script>
+  <script src="js/data.js?v=19"></script>
+  <script src="js/app.js?v=19"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@ service cloud.firestore {
     // Trip expense tracker — open to anyone with the site link.
     match /expenses/{doc} {
       allow read: if true;
-      allow create: if request.resource.data.keys().hasOnly(['title','amount','category','paidBy','family','stop','createdAt'])
+      allow create: if request.resource.data.keys().hasOnly(['title','amount','category','paidBy','family','split','stop','createdAt'])
         && request.resource.data.title is string
         && request.resource.data.title.size() <= 120
         && request.resource.data.amount is number
@@ -12,7 +12,8 @@ service cloud.firestore {
         && request.resource.data.amount <= 100000
         && request.resource.data.paidBy is string
         && request.resource.data.paidBy.size() <= 60
-        && request.resource.data.family in ['A', 'B'];
+        && request.resource.data.family in ['A', 'B']
+        && request.resource.data.split in ['shared', 'A', 'B'];
       allow update, delete: if true;
     }
   }

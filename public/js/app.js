@@ -328,13 +328,14 @@ const Expenses = (() => {
         : "⏳ Connecting to shared store…";
   }
 
-  async function add({ title, amount, category, paidBy, family, stop }) {
+  async function add({ title, amount, category, paidBy, family, split, stop }) {
     const entry = {
       title: title.trim(),
       amount: Math.round(Number(amount) * 100) / 100,
       category,
       paidBy: paidBy.trim() || "Someone",
       family: family === "B" ? "B" : "A",
+      split: ["shared", "A", "B"].includes(split) ? split : "shared",
       stop: stop || "",
       createdAt: Date.now(),
     };
@@ -369,18 +370,17 @@ const Expenses = (() => {
     };
   }
 
-  function settlement(totA, totB) {
+  function settlement(fairA, fairB, paidA, paidB) {
     const names = familyNames();
-    const total = totA + totB;
+    const total = paidA + paidB;
     if (total <= 0) return { text: "Add expenses to see who owes what.", neutral: true };
-    const share = total / 2;               // each family should pay half
-    const owed = Math.abs(totA - totB) / 2;
-    if (Math.abs(totA - totB) < 0.005) {
-      return { text: `✅ All square — each family spent ${fmt(share)}.`, neutral: true };
+    const netA = paidA - fairA;              // + means A paid more than its share
+    if (Math.abs(netA) < 0.005) {
+      return { text: `✅ All square — each family's share is ${fmt(fairA)}.`, neutral: true };
     }
-    const payer = totA > totB ? names.B : names.A;   // family that paid less owes
-    const payee = totA > totB ? names.A : names.B;
-    return { text: `💸 ${payer} owes ${payee} ${fmt(owed)}`, neutral: false };
+    const payer = netA > 0 ? names.B : names.A;   // family that underpaid owes
+    const payee = netA > 0 ? names.A : names.B;
+    return { text: `💸 ${payer} owes ${payee} ${fmt(Math.abs(netA))}`, neutral: false };
   }
 
   function render() {
@@ -418,15 +418,22 @@ const Expenses = (() => {
         <span class="text-xs font-black text-emerald-300">${fmt(v)}</span>
       </div>`).join("") || '<p class="text-xs text-slate-500">—</p>';
 
-    /* family summary + settlement */
-    const totA = expenses.filter((e) => e.family !== "B").reduce((s, e) => s + e.amount, 0);
-    const totB = expenses.filter((e) => e.family === "B").reduce((s, e) => s + e.amount, 0);
+    /* family summary + settlement: individual expenses belong to one family, shared split 50/50 */
+    const paidA = expenses.filter((e) => e.family !== "B").reduce((s, e) => s + e.amount, 0);
+    const paidB = expenses.filter((e) => e.family === "B").reduce((s, e) => s + e.amount, 0);
+    const indA = expenses.filter((e) => e.split === "A").reduce((s, e) => s + e.amount, 0);
+    const indB = expenses.filter((e) => e.split === "B").reduce((s, e) => s + e.amount, 0);
+    const shared = expenses.filter((e) => e.split !== "A" && e.split !== "B").reduce((s, e) => s + e.amount, 0);
+    const fairA = indA + shared / 2;
+    const fairB = indB + shared / 2;
     const names = familyNames();
-    $("#fam-a-total").textContent = fmt(totA);
-    $("#fam-b-total").textContent = fmt(totB);
+    $("#fam-a-total").textContent = fmt(paidA);
+    $("#fam-b-total").textContent = fmt(paidB);
     $("#fam-a-label").textContent = names.A;
     $("#fam-b-label").textContent = names.B;
-    const s = settlement(totA, totB);
+    $("#fam-a-share").textContent = `Share: ${fmt(indA)} own + ${fmt(shared / 2)} shared = ${fmt(fairA)}`;
+    $("#fam-b-share").textContent = `Share: ${fmt(indB)} own + ${fmt(shared / 2)} shared = ${fmt(fairB)}`;
+    const s = settlement(fairA, fairB, paidA, paidB);
     const box = $("#exp-settle");
     box.textContent = s.text;
     box.className = `rounded-2xl px-5 py-4 text-center font-display font-bold text-lg md:text-xl border ${s.neutral ? "border-slate-700/60 bg-slate-900/70 text-slate-200" : "border-amber-400/50 bg-amber-500/10 text-amber-200"}`;
@@ -434,13 +441,16 @@ const Expenses = (() => {
     /* entries */
     list.innerHTML = expenses.map((e) => {
       const m = catMeta(e.category);
+      const splitBadge = e.split === "A" ? `👨‍👩‍👧 ${familyNames().A} only`
+        : e.split === "B" ? `👨‍👩‍👦 ${familyNames().B} only`
+        : "🔀 shared";
       const dt = new Date(e.createdAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
       return `
         <div class="flex items-center gap-3 rounded-2xl bg-slate-900/70 border border-slate-700/60 px-4 py-3">
           <span class="text-xl">${m.icon}</span>
           <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-white truncate">${e.title}</p>
-            <p class="text-[11px] text-slate-400">${e.paidBy} · ${familyNames()[e.family === "B" ? "B" : "A"]}${e.stop ? ` · ${e.stop}` : ""} · ${dt}</p>
+            <p class="text-[11px] text-slate-400">${e.paidBy} · ${familyNames()[e.family === "B" ? "B" : "A"]} · ${splitBadge}${e.stop ? ` · ${e.stop}` : ""} · ${dt}</p>
           </div>
           <span class="text-sm font-black text-emerald-300">${fmt(e.amount)}</span>
           <button data-del="${e.id}" class="text-slate-500 hover:text-red-400 transition text-sm px-1" title="Delete">🗑️</button>
@@ -520,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
       category: $("#exp-category").value,
       paidBy: $("#exp-paidby").value,
       family: $("#exp-family").value,
+      split: $("#exp-split").value,
       stop: $("#exp-stop").value,
     });
     btn.disabled = false;
