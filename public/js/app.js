@@ -96,17 +96,11 @@ function renderLunchStops() {
         </div>
         <h3 class="font-display font-black text-xl text-white">${r.name}</h3>
         <p class="text-xs text-slate-400 mt-0.5">${r.category}</p>
-        <div class="flex items-center gap-3 mt-3 text-sm">
-          <span class="text-amber-300 font-bold">★ ${r.rating}</span>
-          <span class="text-slate-400">·</span>
-          <span class="text-emerald-300 font-bold">${r.price}<span class="text-xs text-slate-400"> / adult</span></span>
-          <span class="text-slate-400">·</span>
+        <div class="flex flex-wrap items-center gap-3 mt-3 text-sm">
+          <span class="text-amber-300 font-bold">★ ${r.rating}${r.reviews ? ` <span class="text-xs text-slate-400 font-normal">(${r.reviews} reviews)</span>` : ""}</span>
           <span class="text-cyan-300 text-xs font-semibold">🕐 ${r.arrival}</span>
         </div>
         <p class="text-xs text-slate-400 mt-3">📍 ${r.addr}</p>
-        <div class="flex flex-wrap gap-1.5 mt-3">
-          ${r.dishes.map((d) => `<span class="text-[10px] font-semibold px-2 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-200">${d}</span>`).join("")}
-        </div>
         <p class="text-xs text-slate-300 mt-3">${r.special}</p>
         <p class="text-xs italic text-slate-400 mt-1">Best for: ${r.bestFor}</p>
         <div class="mt-auto pt-4 space-y-2">

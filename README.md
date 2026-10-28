@@ -18,10 +18,7 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 **Day 2 — Sunday: Drive Home to New Jersey**
 10. 🧳 Depart Providence — 10:00 AM
 11. 🗼 Beavertail Lighthouse & State Park, Jamestown, RI — 10:45 AM
-12. 🍛 Lunch stop in Connecticut — 1:00–1:30 PM
-   - ⭐ #1 **Vedas Indian Cuisine**, Norwalk (Top pick · best value, $12–18/adult)
-   - #2 **Himalaya Sono**, Norwalk (Indian & Nepalese, 4.7★)
-   - #3 **Taj Indian Restaurant**, Stamford (fine dining, 4.7★)
+12. 🍛 Lunch at **Swad Tandoori**, 150 State St, New London, CT — 1:00–1:30 PM
 13. 🏠 Home — Franklin Park, NJ ~3:30 PM
 
 ## ✨ Features
@@ -29,7 +26,7 @@ A sleek, colorful tour website for a two-day trip across **Newport** and **Provi
 - **Interactive timeline** — tap any stop for details, weather and a big one-tap Google Maps button
 - **Live route weather** — current conditions + Sat/Sun forecast for every waypoint and every timeline tile (Open-Meteo, no API key)
 - **Providence Indian restaurant picks** — India Restaurant, Simha, Empire Biryani, Rasoi, Chennai Express & Taj, with ratings, prices and Maps/website/call buttons
-- **Sunday drive-home lunch comparison** — Vedas vs Himalaya Sono vs Taj Stamford
+- **Sunday drive-home lunch stop** — Swad Tandoori, New London, with direct Maps, website and call links
 - **Shared expense tracker** — per-person entries assigned to one of two families; live summary shows per-family totals and calculates who owes whom (50/50 split). Firestore-backed with localStorage fallback
 - Tailwind CSS, single-page static app, mobile-friendly
 
